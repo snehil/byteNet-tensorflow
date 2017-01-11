@@ -111,15 +111,12 @@ def main():
           })
 
         train_writer.add_summary(summary, batch_no * (cnt + 1))
-        print "Loss", loss, batch_no, len(buckets[key]) / batch_size, i, cnt, key
-
-        print "******"
-        print "Source ", dl.inidices_to_string(source[0], source_vocab)
-        print "---------"
-        print "Target ", dl.inidices_to_string(target[0], target_vocab)
-        print "----------"
-        print "Prediction ", dl.inidices_to_string(prediction[0:key], target_vocab)
-        print "******"
+        if batch_no % 100 == 0:
+          print "step: {}/{}, loss: {}, epoch: {}, bucket_order: {}, bucket_id:{}".format(batch_no, len(buckets[key]) / batch_size, loss, i, cnt, key)
+          print "---------"
+          print "Source ", dl.inidices_to_string(source[0], source_vocab)
+          print "Target ", dl.inidices_to_string(target[0], target_vocab)
+          print "Prediction ", dl.inidices_to_string(prediction[0:key], target_vocab)
 
         batch_no += 1
         if batch_no % steps_per_checkpoint == 0:
